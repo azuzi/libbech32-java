@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>design.contract</groupId>
     <artifactId>libbech32</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1.2-SNAPSHOT</version>
 	<distributionManagement>
 	   	<repository>
 	    	<id>github</id>
@@ -68,6 +66,29 @@
                 </execution>
               </executions>
             </plugin>
+			    <plugin>  
+				    <groupId>info.plichta.maven.plugins</groupId>
+				    <artifactId>git-changelog-maven-plugin</artifactId>
+				    <version>0.5.1</version>
+			    </plugin>
+			    <plugin>
+				    <groupId>org.apache.maven.plugins</groupId>
+				    <artifactId>maven-release-plugin</artifactId>
+				    <version>3.0.0-M1</version>
+				    <configuration>
+					    <tagNameFormat>v@{project.version}</tagNameFormat>
+					    <pomFileName>pom.xml</pomFileName>
+					    <preparationGoals>clean git-changelog:git-changelog scm:checkin -DpushChanges=false -Dincludes=CHANGELOG.md -Dmessage="[maven-release-plugin] Update CHANGELOG.md" verify</preparationGoals>
+					    <completionGoals>git-changelog:git-changelog scm:checkin -DpushChanges=false -Dincludes=CHANGELOG.md -Dmessage="[maven-release-plugin] Update CHANGELOG.md"</completionGoals>
+				    </configuration>
+				    <dependencies>
+					    <dependency>
+						    <groupId>org.apache.maven.plugins</groupId>
+						    <artifactId>maven-scm-plugin</artifactId>
+						    <version>1.8.1</version>
+					    </dependency>
+				    </dependencies>
+			  </plugin>	
         </plugins>
     </build>
 
